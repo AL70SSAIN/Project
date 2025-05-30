@@ -1,0 +1,41 @@
+﻿@model RoadMapViewModel
+@{
+    Layout = "_Layout";
+}
+@section Css {
+    <link rel="stylesheet" href="/css/roadmaps.css">
+}
+<div class="modal" id="addRoadmapModal" style="display:block"> 
+   <div class="modal-content"> 
+        <div class="modal-header"> 
+            <h1>Add New Roadmap</h1>
+            <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body"> 
+            <form id="addRoadmapForm" asp-action="AddRoadMaps" asp-controller="RoadMap" method="post">
+                <div class="form-group"> 
+                    <label asp-for="Name" for="roadmapName">Roadmap Name</label> 
+                    <input asp-for="Name" type="text" id="roadmapName" class="form-control" required>
+                </div> 
+                <div class="form-group"> 
+                    <label asp-for="Link" for="roadmapLink">Roadmap Link</label> 
+                    <input asp-for="Link" type="url" id="roadmapLink" class="form-control" placeholder="https://docs.google.com/..." required>
+                </div> 
+                <div class="form-group"> 
+                    <label asp-for="Description" for="roadmapNotes">Description (Optional)</label>
+                    <textarea asp-for="Description" id="roadmapNotes" class="form-control" rows="4" placeholder="Add an Description for this Roadmap"></textarea>
+                </div> 
+                <button type="submit" class="btn-primary w-100">Add Roadmap</button> 
+            </form> 
+        </div> 
+    </div>
+</div>
+<script>
+    document.querySelector(".close-modal").addEventListener("click", () => {
+        document.getElementById("addRoadmapModal").style.display = "none";
+        window.location.href = '@Url.Action("Index", "RoadMap")';
+    });
+</script>
+@section Scripts {
+    <script src="/js/roadmaps.js"></script> 
+}

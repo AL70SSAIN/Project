@@ -1,0 +1,76 @@
+﻿@model List<RoadMap>
+@{
+    Layout = "_Layout";
+}
+@section Css{
+<link rel="stylesheet" href="/css/roadmaps.css">
+}
+<!-- Hero Section with Logo -->
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <img src="/image/logo.png" alt="Art code Logo" class="hero-logo">
+            <h1>Roadmaps</h1>
+            <p class="hero-text">
+                Our Roadmap contains all the materials we use for our training, that includes slides, sheets, and
+                even videos! The Roadmap targets everyone interested in PS, either you're a college student,
+                older or even younger, no matter what your major is, as long as you're interested in learning and
+                willing to stay committed, you can always start here.
+            </p>
+        </div>
+    </div>
+</section>
+<!-- Roadmap Table Section -->
+<section class="roadmap-section">
+    <div class="container">
+        <div class="roadmap-header">
+            <h2>Available Roadmaps</h2>
+             @if (User.IsInRole("Mentor") || User.IsInRole("Admin")){ 
+            <button class="btn-primary" onclick="location.href='@Url.Action("AddRoadMaps", "RoadMap")'">Add Roadmap</button>
+
+            } 
+        </div>
+        <div class="roadmap-table">
+            <div class="table-header">
+                <div class="header-cell">Date</div>
+                <div class="header-cell">Name</div>
+                <div class="header-cell">Description</div>
+                <div class="header-cell">Links</div>
+                <div class="header-cell">Added By</div>
+                <div class="header-cell">Delete</div>
+            </div>
+
+            <!-- Roadmaps will be loaded dynamically here -->
+            <div id="roadmapsContainer">
+                @foreach (RoadMap roadmap in Model)
+                {
+                    <div class="table-row">
+                        <div class="cell">@roadmap.Date</div>
+                        <div class="cell">@roadmap.Name</div>
+                        <div class="cell">@roadmap.Description</div>
+                        <div class="cell">
+                            <a href="@roadmap.Link" target="_blank" class="doc-link">
+                                <i class="fas fa-file-pdf"></i>
+                            </a>
+                        </div>
+                        <div class="cell">@roadmap.Bloger.UserName</div>
+                        @if (roadmap.Bloger.UserName == User.Identity.Name)
+                        {
+                            <div class="cell">
+                                <button class="delete-btn"
+                                        onclick="location.href='@Url.Action("DeleteRoadMaps", "RoadMap")'">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@section Scripts {    
+     <script src="/js/roadmaps.js"></script>  
+}
