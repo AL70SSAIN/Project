@@ -1,0 +1,64 @@
+﻿@model ApplicationUser
+@{
+    Layout = "_Layout";
+}
+@section Css {
+    <link rel="stylesheet" href="/css/auth.css">
+    <link rel="stylesheet" href="/css/profile.css">
+
+}
+
+<!-- Profile Section -->
+<section class="section profile-section">
+    <div class="container">
+        <div class="profile-container">
+            <!-- Profile Header -->
+            <div class="profile-header">
+                <div id="profileAvatar" class="profile-avatar"></div>
+                <div class="profile-info">
+                    <h1 id="profileName">@Model.UserName</h1>
+                    <p id="profileType">Mentor</p>
+                    <p id="profileEmail">@Model.Email</p>
+                    <p id="profileContact">@Model.PhoneNumber</p>
+                </div>
+            </div>
+
+            <!-- Mentor-specific information (only shown for mentors) -->
+            <div id="mentorInfoSection" class="mentor-info-section" style="display: none;">
+                <h2>About Me</h2>
+                <p>@Model.Description</p>
+            </div>
+
+            <!-- Tabs for Requests and Connections -->
+            <div class="profile-tabs">
+                <button class="profile-tab active" data-tab="connections">My Connections</button>
+                <button class="profile-tab" data-tab="requests">Mentorship Requests <span id="requestCount" class="request-count" style="display: none;">0</span></button>
+            </div>
+
+            <!-- Connections Tab Content -->
+            <div id="connectionsTab" class="tab-content">
+                <div class="connections-container">
+                    <div id="noConnectionsMessage" class="no-items-message">
+                        <p>You don't have any active connections yet.</p>
+                        <a href="../mentors/mentors.html" class="btn-primary">Find Mentors</a>
+                    </div>
+                    <div id="connectionsList" class="connections-list"></div>
+                </div>
+            </div>
+
+            <!-- Requests Tab Content -->
+            <div id="requestsTab" class="tab-content" style="display: none;">
+                <div class="requests-container">
+                    <div id="noRequestsMessage" class="no-items-message">
+                        <p>You don't have any pending requests.</p>
+                    </div>
+                    <div id="requestsList" class="requests-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <script src="/js/auth.js"></script>
+    <script src="/js/profile.js"></script>
+}
