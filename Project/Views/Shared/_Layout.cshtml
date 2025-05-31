@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -30,13 +31,16 @@
             </div>
             <nav class="main-nav">
                 <a href=@Url.Action("Index","Home") class="active">Home</a>
-                <a href="../mentors/mentors.html">Mentors</a>
+                <a href=@Url.Action("Index", "Mentor")>Mentors</a>
                 <a href=@Url.Action("Index","RoadMap")>Roadmaps</a>
                 <a href=@Url.Action("AboutUs","Home")>About Us</a>
                 @if (User.IsInRole("Admin"))
                 {
                     <a href="../admin/reports.html">Admin</a>
                 }
+                <a href=@Url.Action("Index", "Profile", User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value)>Profile</a>
+
+                <a href="../admin/reports.html">Admin</a>
             </nav>
             <a href=@Url.Action("LogIn","Account") class="btn-primary nav-btn">Get started</a>
         </div>
