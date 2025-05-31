@@ -15,16 +15,18 @@
                 <p>Sign up or log in to get started</p>
             </div>
             <div class="auth-tabs">
-                <a asp-action="LogIn">
-                    <button class="auth-tab active" data-tab="login">
-                        Log In
-                    </button>
-                </a>
-                <a asp-action="RegisterStudent">
-                    <button class="auth-tab" data-tab="signup">
-                        Sign Up
-                    </button>
-                </a>
+                <button class="auth-tab" data-tab="login"
+                        onclick="location.href='@Url.Action("LogIn", "Account")'">
+                    Log In
+                </button>
+                <button class="auth-tab active" data-tab="signup"
+                        onclick="location.href='@Url.Action("RegisterStudent", "Account")'">
+                    Sign Up as student
+                </button>
+                <button class="auth-tab" data-tab="signup"
+                        onclick="location.href='@Url.Action("RegisterMentor", "Account")'">
+                    Sign Up as mentor
+                </button>
             </div>
             <!-- Login Form -->
             <div class="auth-form-container" id="login-form">

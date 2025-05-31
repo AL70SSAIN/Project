@@ -3,7 +3,7 @@
     Layout = "_Layout";
 }
 @section Css {
-    <link rel="stylesheet" href="/css/auth.css">
+   <link rel="stylesheet" href="/css/auth.css">
 }
 <!-- Auth Section -->
 <section class="section auth-section">
@@ -16,19 +16,22 @@
             </div>
 
             <div class="auth-tabs">
-				<a asp-action="LogIn" >
-                    <button class="auth-tab active" data-tab="login">
+                <button class="auth-tab active" data-tab="login"
+                        onclick="location.href='@Url.Action("LogIn", "Account")'">
                     Log In
-                    </button>
-                </a>
-				<a asp-action="RegisterStudent" >
-                    <button class="auth-tab" data-tab="signup">
-                    Sign Up
-					</button>
-				</a>
+                </button>
+                <button class="auth-tab" data-tab="signup"
+                        onclick="location.href='@Url.Action("RegisterStudent", "Account")'">
+                    Sign Up as student
+                </button>
+                <button class="auth-tab" data-tab="signup"
+                        onclick="location.href='@Url.Action("RegisterMentor", "Account")'">
+                    Sign Up as mentor
+                </button>
             </div>
             <!-- Login Form -->
             <div class="auth-form-container" id="login-form">
+
                 <form id="loginForm" asp-action="LogIn" asp-controller="Account" method="post">
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="form-group">
@@ -47,6 +50,3 @@
         </div>
     </div>
 </section>
-@section Scripts {
-    <script src="/js/auth.js"></script>
-} 
