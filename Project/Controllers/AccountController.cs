@@ -23,7 +23,6 @@ namespace Project.Controllers
             return View();
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegisterStudent(RegisterStudentViewModel NewUser)
         {
             if (ModelState.IsValid)
@@ -32,6 +31,7 @@ namespace Project.Controllers
                 user.UserName = NewUser.UserName;
                 user.Email = NewUser.Email;
                 user.PhoneNumber = NewUser.PhoneNumber;
+                user.Role = "Student";
                 ApplicationUser? usermodel = await userManager.FindByEmailAsync(user.Email);
                 if (usermodel == null)
                 {
@@ -70,6 +70,7 @@ namespace Project.Controllers
                 user.Email = NewUser.Email;
                 user.PhoneNumber = NewUser.PhoneNumber;
                 user.Description = NewUser.Description;
+                user.Role = "Mentor";
                 ApplicationUser? usermodel = await userManager.FindByEmailAsync(user.Email);
                 if (usermodel == null)
                 {
@@ -113,7 +114,7 @@ namespace Project.Controllers
                         return RedirectToAction("Index", "Home");
                     }
                 }
-                ModelState.AddModelError("", "UserName and Password doesn't match");
+                ModelState.AddModelError("", "Email and Password doesn't match");
             }
             return View(User);
         }

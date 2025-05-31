@@ -10,8 +10,5 @@ namespace Project.Identity
         public string? Description { get; set; }
         public ICollection<Request> MentorRequests { get; set; } = new List<Request>();
         public ICollection<Request> StudentRequests { get; set; } = new List<Request>();
-        public ICollection<Report> MentorReports { get; set; } = new List<Report>();
-        public ICollection<Report> StudentReports { get; set; } = new List<Report>();
-
     }
 }

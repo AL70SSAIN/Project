@@ -54,7 +54,7 @@ function updateNavigation() {
                 <div class="user-dropdown">
                     <button class="dropdown-btn"><i class="fas fa-chevron-down"></i></button>
                     <div class="dropdown-content">
-                        <a href="" id="profileLink">My Profile</a>
+                        <a href="../profile.html" id="profileLink">My Profile</a>
                         <a href="#" id="logoutLink">Logout</a>
                     </div>
                 </div>
@@ -97,23 +97,8 @@ function updateNavigation() {
                 window.location.href = getHomePagePath();
             });
             
-            // Add event listener for profile link and set correct path
+            // Add event listener for profile link
             const profileLink = document.getElementById('profileLink');
-            
-            // Set the correct path to profile.html based on current location
-            const path = window.location.pathname;
-            if (path.includes('/home/') ||
-                path.includes('/roadmaps/') || 
-                path.includes('/about_us/') ||
-                path.includes('/mentors/') ||
-                path.includes('/auth/') ||
-                path.includes('/admin/')) {
-                profileLink.href = '../profile.html';
-            } else {
-                // This case is for pages directly in the root directory (e.g., Field_traning/index.html)
-                profileLink.href = 'profile.html';
-            }
-            
             profileLink.addEventListener('click', function(e) {
                 // No need to prevent default as we want to navigate to the profile page
             });
@@ -123,13 +108,8 @@ function updateNavigation() {
 
 // Helper function to get the path to the home page based on current location
 function getHomePagePath() {
-    // Check if we're in a subdirectory
-    if (window.location.pathname.includes('/roadmaps/') || 
-        window.location.pathname.includes('/about_us/')) {
-        return '../home/home.html';
-    } else {
-        return 'home.html';
-    }
+    // We're now in the mentors directory
+    return '../home/home.html';
 }
 
 // Check for pending mentorship requests

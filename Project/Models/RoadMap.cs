@@ -11,7 +11,7 @@ namespace Project.Models
         public DateOnly? Date { get; set; }
         public string Link { get; set; }
         [ForeignKey("Bloger")]
-        public string BlogerId { get; set; }
+        public string? BlogerId { get; set; }
         public ApplicationUser Bloger { get; set; }
 
     }

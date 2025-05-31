@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize tabs
     initProfileTabs();
     
+    // Initialize edit profile functionality
+    initEditProfile();
+    
     // Load connections and requests
     loadConnections();
     loadRequests();
@@ -361,6 +364,124 @@ function declineRequest(requestId) {
         // Show success message
         alert('You have declined the mentorship request.');
     }
+}
+
+// Initialize Edit Profile functionality
+function initEditProfile() {
+    const editProfileBtn = document.getElementById('editProfileBtn');
+    const editProfileModal = document.getElementById('editProfileModal');
+    const closeModalBtn = editProfileModal.querySelector('.close-modal');
+    const editProfileForm = document.getElementById('editProfileForm');
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    
+    // Show/hide mentor fields based on user type
+    const mentorEditFields = document.getElementById('mentorEditFields');
+    if (currentUser.userType === 'mentor') {
+        mentorEditFields.style.display = 'block';
+    }
+    
+    // Populate form with current user data
+    function populateEditForm() {
+        document.getElementById('editUsername').value = currentUser.username;
+        document.getElementById('editContact').value = currentUser.contact;
+        
+        // If user is a mentor, populate mentor-specific fields
+        if (currentUser.userType === 'mentor') {
+            // Set description
+            document.getElementById('editDescription').value = currentUser.description || '';
+            
+            // Check appropriate skill checkboxes
+            const skillCheckboxes = document.querySelectorAll('.skill-checkbox-input');
+            skillCheckboxes.forEach(checkbox => {
+                if (currentUser.skills && currentUser.skills.includes(checkbox.value)) {
+                    checkbox.checked = true;
+                } else {
+                    checkbox.checked = false;
+                }
+            });
+        }
+    }
+    
+    // Open modal and populate form
+    editProfileBtn.addEventListener('click', function() {
+        populateEditForm();
+        editProfileModal.style.display = 'block';
+    });
+    
+    // Close modal
+    closeModalBtn.addEventListener('click', function() {
+        editProfileModal.style.display = 'none';
+    });
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', function(e) {
+        if (e.target === editProfileModal) {
+            editProfileModal.style.display = 'none';
+        }
+    });
+    
+    // Handle form submission
+    editProfileForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form values
+        const username = document.getElementById('editUsername').value;
+        const contact = document.getElementById('editContact').value;
+        
+        // Update user object
+        currentUser.username = username;
+        currentUser.contact = contact;
+        
+        // If user is a mentor, update mentor-specific fields
+        if (currentUser.userType === 'mentor') {
+            // Get selected skills
+            const skillCheckboxes = document.querySelectorAll('.skill-checkbox-input:checked');
+            const skills = Array.from(skillCheckboxes).map(checkbox => checkbox.value);
+            
+            // Validate that at least one skill is selected
+            if (skills.length === 0) {
+                alert('Please select at least one skill');
+                return;
+            }
+            
+            // Get description
+            const description = document.getElementById('editDescription').value;
+            
+            // Update mentor fields
+            currentUser.skills = skills;
+            currentUser.description = description;
+        }
+        
+        // Update current user in localStorage
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        
+        // Update users array in localStorage
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        const userIndex = users.findIndex(u => u.email === currentUser.email);
+        if (userIndex !== -1) {
+            users[userIndex] = currentUser;
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+        
+        // If user is a mentor, also update mentors array
+        if (currentUser.userType === 'mentor') {
+            const mentors = JSON.parse(localStorage.getItem('mentors') || '[]');
+            const mentorIndex = mentors.findIndex(m => m.email === currentUser.email);
+            if (mentorIndex !== -1) {
+                mentors[mentorIndex] = currentUser;
+                localStorage.setItem('mentors', JSON.stringify(mentors));
+            }
+        }
+        
+        // Reload profile data
+        loadUserProfile(currentUser);
+        
+        // Close modal
+        editProfileModal.style.display = 'none';
+        
+        // Show success message
+        alert('Profile updated successfully!');
+    });
 }
 
 // Initialize the Theme Toggle functionality

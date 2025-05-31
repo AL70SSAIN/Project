@@ -25,10 +25,10 @@
     <div class="container">
         <div class="roadmap-header">
             <h2>Available Roadmaps</h2>
-             @if (User.IsInRole("Mentor") || User.IsInRole("Admin")){ 
-            <button class="btn-primary" onclick="location.href='@Url.Action("AddRoadMaps", "RoadMap")'">Add Roadmap</button>
-
-            } 
+            @if (User.IsInRole("Mentor") || User.IsInRole("Admin"))
+            {
+                <button class="btn-primary" onclick="location.href='@Url.Action("AddRoadMaps", "RoadMap")'">Add Roadmap</button>
+            }
         </div>
         <div class="roadmap-table">
             <div class="table-header">
@@ -37,7 +37,6 @@
                 <div class="header-cell">Description</div>
                 <div class="header-cell">Links</div>
                 <div class="header-cell">Added By</div>
-                <div class="header-cell">Delete</div>
             </div>
 
             <!-- Roadmaps will be loaded dynamically here -->
@@ -54,11 +53,11 @@
                             </a>
                         </div>
                         <div class="cell">@roadmap.Bloger.UserName</div>
-                        @if (roadmap.Bloger.UserName == User.Identity.Name)
+                        @if (User.IsInRole("Admin") || roadmap.Bloger.UserName == User.Identity.Name)
                         {
                             <div class="cell">
                                 <button class="delete-btn"
-                                        onclick="location.href='@Url.Action("DeleteRoadMaps", "RoadMap")'">
+                                        onclick="location.href='@Url.Action("DeleteRoadMaps", "RoadMap",new { roadmapid = roadmap.Id })'">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </div>
@@ -72,5 +71,5 @@
 </section>
 
 @section Scripts {    
-     <script src="/js/roadmaps.js"></script>  
+     @* <script src="/js/roadmaps.js"></script>   *@
 }

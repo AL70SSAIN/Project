@@ -16,7 +16,6 @@ namespace Project.ViewModels
         [Required]
         [RegularExpression(@"^[0-9]{11}$", ErrorMessage = "Phone number must be 11 digits.")]
         public string PhoneNumber { get; set; }
-        [Required]
         public string? Description { get; set; }
     }
 }

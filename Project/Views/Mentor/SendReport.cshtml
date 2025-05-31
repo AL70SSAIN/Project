@@ -1,0 +1,38 @@
+﻿@model ReportViewModel
+@{
+    Layout = "_Layout";
+}
+@section Css {
+<link rel="stylesheet" href="/css/mentors.css">
+}
+<!-- Mentor Report Modal -->
+<div class="modal" id="mentorReportModal" style="display:block">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1>Send Report</h1>
+            <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <form id="mentorReportForm" asp-action="SendReport" asp-controller="Mentor" method="post">
+                <div class="form-group">
+                    <label asp-for="Type" for="reportType">Report Type</label>
+                    <input asp-for="Type" type="text" id="reportType" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Content" for="reportContent">Report Content</label>
+                    <input asp-for="Content" type="text" id="reportContent" class="form-control" required>
+                </div>
+                <button type="submit" class="btn-primary w-100">Submit Report</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    document.querySelector(".close-modal").addEventListener("click", () => {
+        document.getElementById("mentorReportModal").style.display = "none";
+        window.location.href = '@Url.Action("Index", "Home")';
+    });
+</script>
+@section Scripts {
+
+}

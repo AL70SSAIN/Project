@@ -261,21 +261,11 @@ namespace Project.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MentorId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("StudentId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MentorId");
-
-                    b.HasIndex("StudentId");
 
                     b.ToTable("Reports");
                 });
@@ -293,10 +283,6 @@ namespace Project.Migrations
 
                     b.Property<string>("MentorId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StudentId")
                         .HasColumnType("nvarchar(450)");
@@ -319,7 +305,6 @@ namespace Project.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BlogerId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateOnly?>("Date")
@@ -394,23 +379,6 @@ namespace Project.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Project.Models.Report", b =>
-                {
-                    b.HasOne("Project.Identity.ApplicationUser", "Mentor")
-                        .WithMany("MentorReports")
-                        .HasForeignKey("MentorId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Project.Identity.ApplicationUser", "Student")
-                        .WithMany("StudentReports")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Mentor");
-
-                    b.Navigation("Student");
-                });
-
             modelBuilder.Entity("Project.Models.Request", b =>
                 {
                     b.HasOne("Project.Identity.ApplicationUser", "Mentor")
@@ -432,20 +400,14 @@ namespace Project.Migrations
                 {
                     b.HasOne("Project.Identity.ApplicationUser", "Bloger")
                         .WithMany()
-                        .HasForeignKey("BlogerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BlogerId");
 
                     b.Navigation("Bloger");
                 });
 
             modelBuilder.Entity("Project.Identity.ApplicationUser", b =>
                 {
-                    b.Navigation("MentorReports");
-
                     b.Navigation("MentorRequests");
-
-                    b.Navigation("StudentReports");
 
                     b.Navigation("StudentRequests");
                 });

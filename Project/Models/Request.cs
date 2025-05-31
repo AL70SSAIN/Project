@@ -7,7 +7,6 @@ namespace Project.Models
     {
         public int Id { get; set; }
         public bool Active { get; set; } = false;
-        public string Message { get; set; }
         [ForeignKey("Mentor")]
         public string? MentorId { get; set; }
         [ForeignKey("Student")]

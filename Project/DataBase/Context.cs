@@ -47,18 +47,6 @@ namespace Project.DataBase
                 .WithMany(u => u.StudentRequests)
                 .HasForeignKey(r => r.StudentId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<Report>()
-                .HasOne(r => r.Mentor)
-                .WithMany(u => u.MentorReports)
-                .HasForeignKey(r => r.MentorId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Report>()
-                .HasOne(r => r.Student)
-                .WithMany(u => u.StudentReports)
-                .HasForeignKey(r => r.StudentId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

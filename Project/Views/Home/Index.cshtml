@@ -8,7 +8,11 @@
             <div class="hero-text">
                 <h1>A <span>bridge</span> between learning and doing - with mentorship that matters.</h1>
                 <p>Learn at your own pace, with lifetime access on mobile and desktop</p>
-                <a href=@Url.Action("LogIn","Account") class="btn-primary">Get started</a>
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <a href=@Url.Action("LogIn","Account")
+                       class="btn-primary nav-btn">Get started</a>
+                }
             </div>
 
                 <div class="hero-img">
